@@ -1,0 +1,6 @@
+# Compiled idea file
+*.idea
+# Compiled .svn file
+.svn*
+# Compiled other file
+out/
