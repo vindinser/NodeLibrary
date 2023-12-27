@@ -23,4 +23,13 @@ public class UserServiceImpl implements UserService {
 		// 调用 Dao 层写好的方法
 		return userDao.select();
 	}
+
+	/**
+	 * 添加用户
+	 * @param user
+	 */
+	@Override
+	public void add(User user) {
+		userDao.add(user);
+	}
 }
