@@ -72,6 +72,9 @@ public class UserViewCtrl implements Initializable {
                 Alerts.warning("未选择","请先选择要删除的数据");
                 return;
             }
+						// 操作硬盘数据在上，若硬盘删除数据失败则操作内存数据不该执行，保存内存数据的准确性
+						userService.delete(user.getId());
+						// 操作内存数据
             this.users.remove(user);
             Alerts.success("成功", "操作成功");
         } catch (Exception e) {

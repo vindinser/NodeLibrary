@@ -41,4 +41,13 @@ public class UserServiceImpl implements UserService {
 	public void update(User user) {
 		userDao.update(user);
 	}
+
+	/**
+	 * É¾³ıÓÃ»§
+	 * @param id
+	 */
+	@Override
+	public void delete(int id) {
+		userDao.delete(id);
+	}
 }
