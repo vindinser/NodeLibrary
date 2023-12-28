@@ -50,4 +50,13 @@ public class UserServiceImpl implements UserService {
 	public void delete(int id) {
 		userDao.delete(id);
 	}
+
+	/**
+	 * ∂≥Ω·”√ªß
+	 * @param id
+	 */
+	@Override
+	public void freeze(int id) {
+		userDao.freeze(id);
+	}
 }

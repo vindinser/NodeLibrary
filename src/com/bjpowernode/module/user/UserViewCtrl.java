@@ -102,14 +102,21 @@ public class UserViewCtrl implements Initializable {
      */
     @FXML
     private void frozen() {
-        User user = this.userTableView.getSelectionModel().getSelectedItem();
-        if (user == null){
-            Alerts.warning("未选择","请先选择要修改的数据");
-            return;
-        }
-        user.setStatus(Constant.USER_FROZEN);
-        userTableView.refresh();
-    }
+			try {
+				User user = this.userTableView.getSelectionModel().getSelectedItem();
+				if (user == null){
+						Alerts.warning("未选择","请先选择要冻结的用户");
+						return;
+				}
+				userService.freeze(user.getId());
+				user.setStatus(Constant.USER_FROZEN);
+				userTableView.refresh();
+				Alerts.success("成功", "操作成功");
+			} catch (Exception e) {
+				Alerts.error("失败","操作失败");
+				throw new RuntimeException(e);
+			}
+		}
 
     /*
         修改

@@ -1,5 +1,6 @@
 package com.bjpowernode.dao.impl;
 
+import com.bjpowernode.bean.Constant;
 import com.bjpowernode.bean.PathConstant;
 import com.bjpowernode.bean.User;
 import com.bjpowernode.dao.UserDao;
@@ -129,6 +130,39 @@ public class UserDaoImpl implements UserDao {
 			// 从list中删除
 			list.remove(user);
 			// 持久化到文件中
+			oos = new ObjectOutputStream(new FileOutputStream(PathConstant.USER_PATH));
+			oos.writeObject(list);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if(ois != null) {
+					ois.close();
+				}
+				if(oos != null) {
+					oos.close();
+				}
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	/**
+	 * 冻结用户
+	 * @param id
+	 */
+	@Override
+	public void freeze(int id) {
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(PathConstant.USER_PATH));
+			List<User> list = (List<User>) ois.readObject();
+			User user = list.stream().filter(item -> item.getId() == id).findFirst().get();
+			user.setStatus(Constant.USER_FROZEN);
 			oos = new ObjectOutputStream(new FileOutputStream(PathConstant.USER_PATH));
 			oos.writeObject(list);
 		} catch (IOException e) {

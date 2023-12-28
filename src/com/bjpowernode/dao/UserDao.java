@@ -17,4 +17,7 @@ public interface UserDao {
 
 	// 删除用户
 	void delete(int id);
+
+	// 冻结用户
+	void freeze(int id);
 }
