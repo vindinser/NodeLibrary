@@ -59,4 +59,9 @@ public class UserServiceImpl implements UserService {
 	public void freeze(int id) {
 		userDao.freeze(id);
 	}
+
+	@Override
+	public void unFreeze(int id) {
+		userDao.unFreeze(id);
+	}
 }

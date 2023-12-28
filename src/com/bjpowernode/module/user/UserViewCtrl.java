@@ -118,6 +118,28 @@ public class UserViewCtrl implements Initializable {
 			}
 		}
 
+		/**
+		 * 解除冻结
+		 */
+		@FXML
+		private void unFreeze() {
+			System.out.println("解除冻结");
+			try {
+				User user = this.userTableView.getSelectionModel().getSelectedItem();
+				if (user == null){
+					Alerts.warning("未选择","请先选择要解除冻结的用户");
+					return;
+				}
+				userService.unFreeze(user.getId());
+				user.setStatus(Constant.USER_OK);
+				userTableView.refresh();
+				Alerts.success("成功", "操作成功");
+			} catch (Exception e) {
+				Alerts.error("失败","操作失败");
+				throw new RuntimeException(e);
+			}
+		}
+
     /*
         修改
      */

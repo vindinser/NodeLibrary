@@ -19,4 +19,7 @@ public interface UserService {
 
 	// 冻结用户
 	void freeze(int id);
+
+	// 解除冻结用户
+	void unFreeze(int id);
 }
