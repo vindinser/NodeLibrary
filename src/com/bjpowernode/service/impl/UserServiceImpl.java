@@ -32,4 +32,13 @@ public class UserServiceImpl implements UserService {
 	public void add(User user) {
 		userDao.add(user);
 	}
+
+	/**
+	 * ĞŞ¸ÄÓÃ»§
+	 * @param user
+	 */
+	@Override
+	public void update(User user) {
+		userDao.update(user);
+	}
 }

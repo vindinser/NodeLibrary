@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
 	public void add(User user) {
 		ObjectInputStream ois = null;
 		ObjectOutputStream oos = null;
-        try {
+		try {
 			// 读取文件中的List对象
 			ois = new ObjectInputStream(new FileInputStream(PathConstant.USER_PATH));
 			List<User> list = (List<User>)ois.readObject();
@@ -55,11 +55,11 @@ public class UserDaoImpl implements UserDao {
 			// 将list写入文件
 			oos = new ObjectOutputStream(new FileOutputStream(PathConstant.USER_PATH));
 			oos.writeObject(list);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
+		} catch (IOException e) {
+				throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+		} finally {
 			try {
 				if(ois != null) {
 					ois.close();
@@ -71,5 +71,45 @@ public class UserDaoImpl implements UserDao {
 				throw new RuntimeException(e);
 			}
 		}
-    }
+	}
+
+	/**
+	 * 修改用户
+	 * @param user
+	 */
+	@Override
+	public void update(User user) {
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
+		// 将list对象从文件中取出
+		try {
+			ois = new ObjectInputStream(new FileInputStream(PathConstant.USER_PATH));
+			List<User> list = (List<User>)ois.readObject();
+			if(list != null) {
+				// 从list中查找要修改的数据
+				User originUser = list.stream().filter(item -> item.getId() == user.getId()).findFirst().get();
+				// 修改数据
+				originUser.setName(user.getName());
+				originUser.setMoney(user.getMoney());
+				// 将数据持久化到文件中
+				oos = new ObjectOutputStream(new FileOutputStream(PathConstant.USER_PATH));
+				oos.writeObject(list);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if(ois != null) {
+					ois.close();
+				}
+				if(oos != null) {
+					oos.close();
+				}
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
 }

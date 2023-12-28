@@ -10,4 +10,7 @@ public interface UserService {
 
 	// 添加用户
 	void add(User user);
+
+	// 修改用户
+	void update(User user);
 }

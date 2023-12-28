@@ -33,7 +33,7 @@
     - Javafx
     - css
     - Jfoenix：提供美观的UI控件
-    - Dashboardfx：组合UI控件，构成仪表盘
+    - DashboardFx：组合UI控件，构成仪表盘
 - 项目结构
     ``` java
         .
@@ -74,11 +74,11 @@
 
 ### 快捷键
 
-快捷键 | 作用
-- | -
-ctrl+alt+u | 查看继承结构图
-ctrl+alt+t | 捕获异常
-ctrl+o | 重写方法
+| 快捷键        | 作用      |
+|------------|---------|
+| ctrl+alt+u | 查看继承结构图 |
+| ctrl+alt+t | 捕获异常    |
+| ctrl+o     | 重写方法    |
 
 ### 用户管理
 
@@ -87,7 +87,21 @@ ctrl+o | 重写方法
 - 用户查询操作
     ``` powershell
         # writing aborted; java.io.NotSerializableException: com.bjpowernode.bean.User
+        # 通过IO流将List对象数据持久化到硬盘的文件中，List中存放的数据是User类型，所以要让User类实现Serializable接口。倘若我们要对某个类的对象进行IO操作时，别忘了让这个类实现Serializable接口。
         public class User implements Serializable {
         # java.io.InvalidClassException: com.bjpowernode.bean.User; local class incompatible: stream classdesc serialVersionUID = 8610945373491150863, local class serialVersionUID = 3415128512889338154
         # 版本序列号改变，User中添加 private static final long serialVersionUID = 1L;
     ```
+> - 用户分层的使用：通过接口的使用可以提高代码的可插拔性，提高了程序的可维护性。
+>> - controller： UserViewCtrl
+>> - service：接口UserService，实现类UserServiceImpl
+>> - dao：接口UserDao，实现类UserDaoImpl
+
+- 用户添加
+
+> - 在添加界面输入用户信息之后，点击提交按钮，会将用户对象传到service层，service层再调用DAO，在DAO中使用对象输入流将用户集合数据读到内存中，将新增的user对象存入集合里面，之后使用对象输出流将用户集合数据写出到硬盘文件中。
+> - 在创建类似User这样的类时，我们通常会在里面添加一个id编号属性，目的是作为该对象的唯一标识，便于查询，修改，删除操作。为了保证id编号不重复，这里通过程序控制id编号自动增长，在多线程环境下需要注意线程安全的问题。
+
+- 用户修改
+> 点击修改按钮之后需要将当前选中的修改数据显示到修改界面中，修改界面里面要存储数据的编号id，这些数据传到DAO层之后，通过id在用户集合中找到相应的用户对象，从而进行修改操作。这里的修改界面跟添加界面使用的是同一个fxml
+
