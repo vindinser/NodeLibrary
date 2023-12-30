@@ -1,17 +1,16 @@
 package com.bjpowernode.until;
 
-import com.bjpowernode.bean.Book;
-import com.bjpowernode.bean.Constant;
-import com.bjpowernode.bean.PathConstant;
-import com.bjpowernode.bean.User;
+import com.bjpowernode.bean.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class InitDataUtil {
     public static void main(String[] args) {
@@ -30,6 +29,22 @@ public class InitDataUtil {
         bookList.add(new Book(3, "MySQL零基础入门", "老杜", Constant.TYPE_COMPUTER, "2023-3", "动力节点出版社", Constant.STATUS_STORAGE));
         bookList.add(new Book(4, "JDBC零基础入门", "老杜", Constant.TYPE_COMPUTER, "2023-4", "动力节点出版社", Constant.STATUS_STORAGE));
         initData(PathConstant.BOOK_PATH, bookList);
+
+        // 初始化借阅数据
+        List<Lend> lendList = new ArrayList<>();
+        User user = new User(1001, "张大虎", Constant.USER_OK, BigDecimal.TEN);
+        Book book = new Book(4, "JDBC零基础入门", "老杜", Constant.TYPE_COMPUTER, "2023-4", "动力节点出版社", Constant.STATUS_STORAGE);
+        Lend lend = new Lend();
+        // 使用UUID生成编号
+        lend.setId(UUID.randomUUID().toString());
+
+        lend.setUser(user);
+        lend.setBook(book);
+        lend.setStatus(Constant.STATUS_LEND);
+        LocalDate begin = LocalDate.now();
+        lend.setLendDate(begin);
+        lend.setReturnDate(begin.plusDays(30));
+        initData(PathConstant.Lend_PATH, lendList);
     }
 
     /**

@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.UUID;
 
 
 public class BookLendViewCtrl {
@@ -51,7 +52,7 @@ public class BookLendViewCtrl {
     private void add() {
         Lend lend = new Lend();
         LocalDate now = LocalDate.now();
-        lend.setId(5);
+        lend.setId(UUID.randomUUID().toString());
         lend.setLendDate(now);
         lend.setReturnDate(now.plusDays(30));
         lend.setStatus(Constant.LEND_LEND);
