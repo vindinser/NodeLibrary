@@ -23,4 +23,7 @@ public interface UserDao {
 
 	// 解除冻结用户
 	void unFreeze(int id);
+
+	// 查询可以借书的用户
+	List<User> selectUserToLend();
 }

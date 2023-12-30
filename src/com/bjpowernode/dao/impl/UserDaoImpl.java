@@ -8,6 +8,7 @@ import com.bjpowernode.dao.UserDao;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户Dao层
@@ -214,5 +215,28 @@ public class UserDaoImpl implements UserDao {
 				throw new RuntimeException(e);
 			}
 		}
+	}
+
+	/**
+	 * 查询可以借书的用户
+	 * @return
+	 */
+	@Override
+	public List<User> selectUserToLend() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PathConstant.USER_PATH))) {
+			List<User> userList = (List<User>)ois.readObject();
+			if(userList != null) {
+				// 查询 用户状态正常 并且 isLend == false
+				List<User> collect = userList.stream().filter(item -> Constant.USER_OK.equals(item.getStatus()) && item.getLend() == false).collect(Collectors.toList());
+				return collect;
+			}
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+		return new ArrayList<>();
 	}
 }

@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
 	public void unFreeze(int id) {
 		userDao.unFreeze(id);
 	}
+
+	@Override
+	public List<User> selectUserToLend() {
+		return userDao.selectUserToLend();
+	}
 }

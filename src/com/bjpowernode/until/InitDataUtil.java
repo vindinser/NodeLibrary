@@ -19,7 +19,13 @@ public class InitDataUtil {
 
         // 初始化用户数据
         List<User> userList = new ArrayList<>();
-        userList.add(new User(1001, "张大虎", Constant.USER_OK, BigDecimal.TEN));
+        userList.add(new User(1001, "老大", Constant.USER_OK, BigDecimal.TEN, false));
+        userList.add(new User(1002, "大忒忒", Constant.USER_OK, BigDecimal.TEN, false));
+        userList.add(new User(1003, "漂亮", Constant.USER_OK, BigDecimal.TEN, false));
+        userList.add(new User(1004, "老四", Constant.USER_OK, BigDecimal.TEN, false));
+        userList.add(new User(1005, "小白", Constant.USER_OK, BigDecimal.TEN, false));
+        userList.add(new User(1005, "煤球", Constant.USER_OK, BigDecimal.TEN, false));
+        userList.add(new User(1005, "老三", Constant.USER_OK, BigDecimal.TEN, false));
         initData(PathConstant.USER_PATH, userList);
 
         // 初始化图书数据
@@ -32,7 +38,7 @@ public class InitDataUtil {
 
         // 初始化借阅数据
         List<Lend> lendList = new ArrayList<>();
-        User user = new User(1001, "张大虎", Constant.USER_OK, BigDecimal.TEN);
+        User user = new User(1001, "张大虎", Constant.USER_OK, BigDecimal.TEN, false);
         Book book = new Book(4, "JDBC零基础入门", "老杜", Constant.TYPE_COMPUTER, "2023-4", "动力节点出版社", Constant.STATUS_STORAGE);
         Lend lend = new Lend();
         // 使用UUID生成编号
@@ -102,7 +108,7 @@ public class InitDataUtil {
                 List<User> list = new ArrayList<>();
                 // 判断userList是否为空
                 if(userList == null) {
-                    list.add(new User(1001, "张大虎", Constant.USER_OK, BigDecimal.TEN));
+                    list.add(new User(1001, "张大虎", Constant.USER_OK, BigDecimal.TEN, false));
                 } else {
                     list = userList;
                 }
