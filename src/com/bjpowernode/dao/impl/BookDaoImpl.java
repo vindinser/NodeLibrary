@@ -98,4 +98,40 @@ public class BookDaoImpl implements BookDao {
 			}
 		}
 	}
+
+	/**
+	 * 删除图书
+	 * @param id
+	 */
+	@Override
+	public void delte(int id) {
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(PathConstant.BOOK_PATH));
+			List<Book> bookList = (List<Book>)ois.readObject();
+			if(bookList != null) {
+				Book book = bookList.stream().filter(item -> item.getId() == id).findFirst().get();
+				bookList.remove(book);
+				// 持久化图书数据到硬盘中
+				oos = new ObjectOutputStream(new FileOutputStream(PathConstant.BOOK_PATH));
+				oos.writeObject(bookList);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if(ois != null) {
+					ois.close();
+				}
+				if(oos != null) {
+					oos.close();
+				}
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
 }

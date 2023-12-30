@@ -106,6 +106,7 @@ public class BookViewCtrl implements Initializable {
                 Alerts.warning("未选择","请先选择要删除的数据");
                 return;
             }
+            bookService.delte(book.getId());
             this.books.remove(book);
             Alerts.success("成功", "图书修改成功");
         } catch (Exception e) {

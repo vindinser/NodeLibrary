@@ -10,4 +10,7 @@ public interface BookService {
 
 	// Ìí¼ÓÍ¼Êé
 	void add(Book book);
+
+	// É¾³ıÍ¼Êé
+	void delte(int id);
 }
