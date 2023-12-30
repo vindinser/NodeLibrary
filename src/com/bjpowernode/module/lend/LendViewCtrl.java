@@ -1,10 +1,11 @@
 package com.bjpowernode.module.lend;
 
-import com.gn.App;
 import com.bjpowernode.bean.Book;
+import com.bjpowernode.service.LendService;
+import com.bjpowernode.service.impl.LendServiceImpl;
+import com.gn.App;
 import com.bjpowernode.bean.Constant;
 import com.bjpowernode.bean.Lend;
-import com.bjpowernode.bean.User;
 import com.bjpowernode.global.util.Alerts;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.beans.property.SimpleObjectProperty;
@@ -28,6 +29,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -63,12 +65,13 @@ public class LendViewCtrl implements Initializable {
 
     ObservableList<Lend> lends = FXCollections.observableArrayList();
 
+    private LendService lendService = new LendServiceImpl();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Book book = new Book(1, "java实战入门", "张三", Constant.TYPE_COMPUTER, "12-987", "XX出版社", Constant.STATUS_STORAGE);
-        User user = new User(1, "张三", "正常", new BigDecimal(("100")));
-        LocalDate now = LocalDate.now();
-        lends.add(new Lend(UUID.randomUUID().toString(),book,user, Constant.LEND_LEND, now,now.plusDays(30)));
+
+        List<Lend> lendList = lendService.select(null);
+        lends.addAll(lendList);
 
         c1.setCellValueFactory(new PropertyValueFactory<>("id"));
         //获取图书名称
@@ -94,23 +97,19 @@ public class LendViewCtrl implements Initializable {
      */
     @FXML
     private void lendSelect(){
+        // 获取用户输入的 书名、isbn
         String lendName = lendNameField.getText();
         String isbn = isbnField.getText();
-        boolean lendFlag = "".equals(lendName);
-        boolean isbnFlag = "".equals(isbn);
-        ObservableList<Lend> result = lends;
-        if (lendFlag && isbnFlag) {
-            return;
-        }else {
-//            if (!lendFlag){
-//                result = lends.filtered(s -> s.getLendName().contains(lendName));
-//            }
-//            if (!isbnFlag) {
-//                result = lends.filtered(s -> s.getIsbn().contains(isbn));
-//            }
-        }
 
-        lends = new ObservableListWrapper<Lend>(new ArrayList<Lend>(result));
+        Book book = new Book();
+        book.setBookName(lendName);
+        book.setIsbn(isbn);
+        Lend lend = new Lend();
+        lend.setBook(book);
+        // 条件查询
+        List<Lend> lendList = lendService.select(lend);
+
+        lends = new ObservableListWrapper<Lend>(new ArrayList<Lend>(lendList));
         lendTableView.setItems(lends);
     }
 

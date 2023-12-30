@@ -44,6 +44,7 @@ public class InitDataUtil {
         LocalDate begin = LocalDate.now();
         lend.setLendDate(begin);
         lend.setReturnDate(begin.plusDays(30));
+        lendList.add(lend);
         initData(PathConstant.Lend_PATH, lendList);
     }
 
