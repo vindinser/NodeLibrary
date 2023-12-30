@@ -91,6 +91,11 @@ public class BookViewCtrl implements Initializable {
                 Alerts.warning("未选择","请先选择要借阅的书籍");
                 return;
             }
+            // 若书籍已借出则不能再借
+            if(Constant.LEND_LEND.equals(book.getStatus())) {
+                Alerts.warning("已借出","请先选择其他书籍");
+                return;
+            }
 
             initLendStage(book);
         } catch (IOException e) {
