@@ -25,7 +25,10 @@ public class InitDataUtil {
 
         // 初始化图书数据
         List<Book> bookList = new ArrayList<>();
-        bookList.add(new Book(1, "java零基础入门", "老杜", Constant.TYPE_COMPUTER, "123-1", "动力节点出版社", Constant.STATUS_STORAGE));;
+        bookList.add(new Book(1, "java零基础入门", "老杜", Constant.TYPE_COMPUTER, "2023-1", "动力节点出版社", Constant.STATUS_STORAGE));
+        bookList.add(new Book(2, "JavaSE进阶", "老杜", Constant.TYPE_COMPUTER, "2023-1", "动力节点出版社", Constant.STATUS_STORAGE));
+        bookList.add(new Book(3, "MySQL零基础入门", "老杜", Constant.TYPE_COMPUTER, "2023-3", "动力节点出版社", Constant.STATUS_STORAGE));
+        bookList.add(new Book(4, "JDBC零基础入门", "老杜", Constant.TYPE_COMPUTER, "2023-4", "动力节点出版社", Constant.STATUS_STORAGE));
         initData(PathConstant.BOOK_PATH, bookList);
     }
 
@@ -48,10 +51,10 @@ public class InitDataUtil {
             // 判断文件是否存在
             if(!file.exists()) {
                 file.createNewFile();
-                // 利用对象输出流将list数据写出到文件中
-                oos = new ObjectOutputStream(new FileOutputStream(path));
-                oos.writeObject(list);
             }
+            // 利用对象输出流将list数据写出到文件中
+            oos = new ObjectOutputStream(new FileOutputStream(path));
+            oos.writeObject(list);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
