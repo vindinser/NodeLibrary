@@ -32,6 +32,25 @@ public class UserDaoImpl implements UserDao {
 	  }
 
 	/**
+	 * 查询用户（带参数 重载）
+	 * @param user
+	 * @return
+	 */
+	@Override
+	public List<User> select(User user) {
+		// 自动关闭流
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PathConstant.USER_PATH))) {
+			List<User> list = (List<User>) ois.readObject();
+			List<User> collect = list.stream().filter(item -> item.getId() == user.getId()).collect(Collectors.toList());
+			return collect;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		// 如果出现异常，则返回一个List对象
+		return new ArrayList<>();
+	}
+
+	/**
 	 * 添加用户
 	 * @param user
 	 */

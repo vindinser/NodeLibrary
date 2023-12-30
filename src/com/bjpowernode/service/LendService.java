@@ -7,4 +7,7 @@ import java.util.List;
 public interface LendService {
 	// ²éÑ¯
 	List<Lend> select(Lend lend);
+
+	// ½èÔÄ
+	void add(int bookId, int userId);
 }

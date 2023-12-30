@@ -174,6 +174,8 @@ public class BookViewCtrl implements Initializable {
 
         Stage stage = new Stage();//´´½¨ÎèÌ¨£»
         BookLendViewCtrl controller = (BookLendViewCtrl)loader.getController();
+        controller.setBookTableView(bookTableView);
+
         controller.setStage(stage);
         controller.setBook(book);
         stage.setHeight(800);

@@ -8,6 +8,8 @@ import java.util.List;
 public interface UserDao {
   // 用户查询
   List<User> select();
+	// 重载查询
+  List<User> select(User user);
 
   // 添加用户
   void add(User user);
