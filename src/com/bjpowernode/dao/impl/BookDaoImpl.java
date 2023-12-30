@@ -3,6 +3,7 @@ package com.bjpowernode.dao.impl;
 import com.bjpowernode.bean.Book;
 import com.bjpowernode.bean.PathConstant;
 import com.bjpowernode.dao.BookDao;
+import com.bjpowernode.until.BeanUntil;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -113,6 +114,48 @@ public class BookDaoImpl implements BookDao {
 			if(bookList != null) {
 				Book book = bookList.stream().filter(item -> item.getId() == id).findFirst().get();
 				bookList.remove(book);
+				// 持久化图书数据到硬盘中
+				oos = new ObjectOutputStream(new FileOutputStream(PathConstant.BOOK_PATH));
+				oos.writeObject(bookList);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if(ois != null) {
+					ois.close();
+				}
+				if(oos != null) {
+					oos.close();
+				}
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	/**
+	 * 修改图书
+	 * @param book
+	 */
+	@Override
+	public void update(Book book) {
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(PathConstant.BOOK_PATH));
+			List<Book> bookList = (List<Book>)ois.readObject();
+			if(bookList != null) {
+				Book originBook = bookList.stream().filter(item -> item.getId() == book.getId()).findFirst().get();
+				// originBook.setIsbn(book.getIsbn());
+				// originBook.setBookName(book.getBookName());
+				// originBook.setAuthor(book.getAuthor());
+
+				// 使用反射
+				BeanUntil.populate(originBook, book);
+
 				// 持久化图书数据到硬盘中
 				oos = new ObjectOutputStream(new FileOutputStream(PathConstant.BOOK_PATH));
 				oos.writeObject(bookList);

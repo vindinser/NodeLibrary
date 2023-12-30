@@ -13,4 +13,7 @@ public interface BookDao {
 
 	// É¾³ıÍ¼Êé
 	void delte(int id);
+
+	// ĞŞ¸ÄÍ¼Êé
+	void update(Book book);
 }
