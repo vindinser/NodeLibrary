@@ -13,4 +13,7 @@ public interface LendDao {
 
 	// »¹Êé
 	void delete(String id);
+
+	// ÐÞ¸Ä
+	void update(Lend lend);
 }

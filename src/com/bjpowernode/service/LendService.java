@@ -13,4 +13,7 @@ public interface LendService {
 
 	// »¹Êé
 	List<Lend> returnBook(Lend lend);
+
+	// ÐÞ¸Ä
+	void update(Lend lend);
 }

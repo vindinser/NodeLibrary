@@ -92,4 +92,9 @@ public class LendServiceImpl implements LendService {
 
 		return select(null);
 	}
+
+	@Override
+	public void update(Lend lend) {
+		lendDao.update(lend);
+	}
 }
