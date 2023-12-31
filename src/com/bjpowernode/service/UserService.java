@@ -2,6 +2,7 @@ package com.bjpowernode.service;
 
 import com.bjpowernode.bean.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface UserService {
@@ -25,4 +26,7 @@ public interface UserService {
 
 	// 查询可以借书的用户
 	List<User> selectUserToLend();
+
+	// 充值
+	User charge(User user, BigDecimal money);
 }
