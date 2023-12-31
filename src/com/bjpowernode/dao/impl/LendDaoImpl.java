@@ -8,6 +8,7 @@ import com.bjpowernode.dao.LendDao;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class LendDaoImpl implements LendDao {
@@ -73,6 +74,31 @@ public class LendDaoImpl implements LendDao {
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
+		}
+	}
+
+	/**
+	 * ªπ È
+	 * @param id
+	 */
+	@Override
+	public void delete(String id) {
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(PathConstant.Lend_PATH));
+			List<Lend> lendList = (List<Lend>) ois.readObject();
+			if(lendList != null) {
+				Lend originLend = lendList.stream().filter(item -> Objects.equals(id, item.getId())).findFirst().get();
+				lendList.remove(originLend);
+
+					oos = new ObjectOutputStream(new FileOutputStream(PathConstant.Lend_PATH));
+					oos.writeObject(lendList);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

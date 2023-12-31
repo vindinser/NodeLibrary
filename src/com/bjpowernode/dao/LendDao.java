@@ -10,4 +10,7 @@ public interface LendDao {
 
 	// ½èÔÄ
 	void add(Lend lend);
+
+	// »¹Êé
+	void delete(String id);
 }

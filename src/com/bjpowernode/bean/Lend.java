@@ -28,6 +28,9 @@ public class Lend implements Serializable {
     //归还日期
     private LocalDate returnDate;
 
+    // 是否归还（可通过此字段的控制进行逻辑删除）
+    private Boolean isReturn;
+
     public Lend() {
 
     }

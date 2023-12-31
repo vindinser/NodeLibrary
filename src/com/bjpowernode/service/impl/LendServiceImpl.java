@@ -69,4 +69,27 @@ public class LendServiceImpl implements LendService {
 		// 添加出借数据
 		lendDao.add(lend);
 	}
+
+	/**
+	 * 还书
+	 * @param lend
+	 * @return
+	 */
+	@Override
+	public List<Lend> returnBook(Lend lend) {
+		// 获取用户对象
+		User user = lend.getUser();
+		// 获取图书对象
+		Book book = lend.getBook();
+		// 修改状态
+		user.setLend(false);
+		book.setStatus(Constant.STATUS_STORAGE);
+
+		userDao.update(user);
+		bookDao.update(book);
+
+		lendDao.delete(lend.getId());
+
+		return select(null);
+	}
 }
